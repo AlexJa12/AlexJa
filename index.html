@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Alex Ja - Creador de Contenido</title>
+
+  <!-- Tipografía elegante desde Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+  <style type="text/css">
+	  
+    /* Reset básico */
+	  
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #3B3636
+		  ;
+      color: #222;
+      line-height: 1.6;
+    }
+header h1 {
+      color: #fff;
+      text-align: center;
+	font-family: Gotham, "sans-serif";
+ 
+      
+    }
+    header {
+      background: linear-gradient(#0A0A0A, #000000, #24FFF1);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem;
+      font-family:Helvetica,  "sans-serif";
+      animation: fadeInHeader 2s ease-in-out;
+    }
+
+    @keyframes fadeInHeader {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: #222;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #75DBE4;
+		background-color: cyan;
+		
+		border-radius: 5px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .profile {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .profile:hover {
+      transform: translateY(-10px);
+    }
+
+    .profile h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .profile p {
+      font-size: 1rem;
+    }
+
+    .video {
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: slideUp 1.5s ease;
+    }
+
+    @keyframes slideUp {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #222;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* diseño con flexbox en sección de contacto */
+    .contacto {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: #fff;
+      padding: 2rem;
+      margin: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .contacto input, .contacto textarea {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .contacto button {
+      background-color: #000000;
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .contacto button:hover {
+      background-color: #75DBE4;
+    }
+    
+    .contenedor {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 3rem;
+    }
+
+    .tarjeta {
+      background-color: white;
+      border-radius: 12px;
+      max-width: 300px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .tarjeta:hover {
+      transform: translateY(-10px);
+    }
+
+    .tarjeta h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      color: #75DBE4;
+    }
+
+    .tarjeta p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .tarjeta img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    @media screen and (max-width: 768px) {
+      .contenedor {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+.contenedor2 {
+			width: 90%;
+			max-width: 1200px;
+			margin: auto;
+			display: grid;
+			grid-template-rows: auto 1fr auto;
+			gap: 20px;
+			min-height: 100vh;
+		}
+		
+
+		.parallax{
+			height: 300px;
+			background-image: url(https://www.lupamarketing.com.ar/wp-content/uploads/2021/08/contenido-audiovisual-1070x600.jpg?);
+			background-attachment: fixed;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		.parallax1{
+			height: 300px;
+			background-image: url(https://www.suturart.com/wp-content/uploads/2019/03/virtual_pesadilla.gif);
+			background-attachment: fixed;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		main {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 20px;
+			text-align: center;
+		}
+		.columna{
+			background-color: white;
+			padding: 10px 30px;
+			border: 2px solid black;
+			border-radius: 10px;
+			box-shadow: 8px 8px 15px #e5e5e5;
+		}
+		.columna li{
+			color: black;
+			font-family: Helvetica, "sans-serif";
+		}
+		.columna img{
+			transition: transform 0.3s ease;
+		}
+		.columna img:hover{
+			transform: scale(1.2);
+			background-color:black;
+		}
+		
+		.contenido h2{
+			color:#75DBE4;
+			}
+	  .hero {
+      background-color: #242020;
+      color: #fff;
+      padding: 40px;
+      text-align: center;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: 50px;
+    }
+	 			.footer-aj {
+  background-color: #111;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  padding: 40px 20px 20px;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+	
+}
+
+.footer-logo img {
+  height: 60px;
+	
+}
+
+.footer-links {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+
+}
+
+.footer-links a:hover {
+  color: #e4002b; /* Rojo KFC */
+}
+
+.footer-social a {
+  color: #fff;
+  margin: 0 10px;
+  font-size: 1.2em;
+  transition: color 0.3s;
+	text-decoration: none;
+}
+
+.footer-social a:hover {
+  color: #e4002b;
+}
+
+.footer-bottom {
+  margin-top: 30px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #aaa;
+}
+	  .footer-social a{
+		  color:aliceblue;
+	  }
+	  
+	   .imagen-con-marco img {
+      border: 5px solid #FFF6F5;
+      padding: 10px;
+		   border-bottom-color: aqua;
+		   background-color: lightslategrey;
+	  
+    }
+	   .imagen-con-marco {
+      border: 5px solid #FFF6F5;
+      padding: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      animation: moverMarco 3s infinite alternate;
+    }
+
+    @keyframes moverMarco {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      }
+      100% {
+        transform: translateY(-10px) rotate(1deg);
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+	 
+    <h1>Alex Ja</h1>
+	  
+    <p>"El éxito no es la ausencia de fracasos, sino la persistencia a pesar de ellos." </p>
+  </header>
+
+  <nav>
+    <a href="#perfil">Sobre Mí</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contactos.html">Contacto</a>
+	<a href="redesalexjaaaa.html">Redes sociales</a>
+  </nav>
+<section class="hero">
+      <h1>Déjanos guiarte, conocemos el camino.</h1>
+      <p>Ponemos a tu disposición un equipo humano y tecnológico capacitado para agregarle valor, continuamente, a tu giro de negocio</p>
+	<br>
+	 <div class="imagen-con-marco">
+	 <img src="https://wallpapers.com/images/hd/motivational-quotes-black-mpi6jhfwg8ngk6g2.jpg" width="700px" height="300px" alt="Imagen de contenido" style="margin: 10px;">
+		 </div>
+    </section>
+	  
+  <section class="container" id="perfil">
+    <div class="profile">
+      <h2>Alex Ja</h2>
+      <p>Hola, soy Alex Ja. Mi pasión es contar historias a través de un video impactante.</p>
+		<p> 🢆 En la actualidad tengo 21 años de Edad.</p>
+		<p>🢆 Me gusta aprender cosas nuevas y del fracaso he aprendido que los errores son partes de la vida. </p>
+		<p>🢆 Soy oriundo de la Ciudad de Quito (Quito Renace). </p>
+		<p>🢆 Amo el Deporte, Ser Runnig no es una casualidad </p>
+		<p>🢆 En la actualidad soy estudiante del ITSQmet y estudio la carrera de Diseño Multimedia. </p>
+		
+		
+		
+    </div>
+
+    <div class="profile">
+      <h2>Servicios</h2>
+      <ul>
+        <li> Edición de video profesional para redes sociales </li>
+        <li> Creación de contenido multimedia</li>
+        <li> Camarografo </li>
+		  <li> Publicidad  </li>
+		  <li> Manejo de Redes Sociales  </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="container" id="videos">
+    <div class="video">
+      <iframe src="https://media.istockphoto.com/id/1405992976/es/v%C3%ADdeo/hermosa-gerente-de-proyecto-de-pelo-corto-trabajando-en-la-computadora-en-la-oficina-los.mp4?s=mp4-640x640-is&k=20&c=cuhezZi_pmBeLYzuipfM57RA5GTIzOLRKuJqK1aKWO8=" title="video de AlexJa" allowfullscreen></iframe>
+    </div>
+    <div class="video">
+      <iframe src="https://media.istockphoto.com/id/2170480034/video/technology-digitally-generated-image-digital-display-digital-animation-digitization.mp4?s=mp4-640x640-is&k=20&c=81ltQqC04BDhtxjmq7C5baL3DKz8luMOLOVNs1i838s=" title="video 2" allowfullscreen></iframe>
+    </div>
+  </section>
+ <section class="contenedor">
+    
+    <!-- Tarjeta 1 -->
+    <div class="tarjeta">
+      <img src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/28fbd59d33685beb5e4633b017a1a59a~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=261988c5&x-expires=1754074800&x-signature=ad6kmW27KY2Ft7Qg4p9Z9UJ8X4Y%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" alt="Imagen de contenido">
+      <h2>Alex Ja</h2>
+      <p> Profesionales en video, fotografía y medios digitales. Ayudo a las marcas a destacar visualmente.</p>
+    </div>
+
+    <!-- Tarjeta 2 -->
+    <div class="tarjeta">
+      <img src="https://visualma.com/static/ca4a035423668dd63dfe5d6186235573/1e21a/sets-grabacion-virtual-mexico.jpg">
+      <h2>Producción Visual</h2>
+      <p>Trabajamos con los mejores Equipos de Produccion del Mercado.</p>
+		<h2>Marcas:</h2>
+		<li>SONNY</li>
+		<li>Apple</li>
+		<li>Adobe</li>
+    </div>
+
+    <!-- Tarjeta 3 -->
+    <div class="tarjeta">
+      <img src="https://bing.com/th/id/BCO.bfdc2724-9f97-4156-ab4c-dc5034f2f4cb.png" alt="Marca personal">
+      <h2>Marca Personal</h2>
+      <p>Impulsa tu identidad visual con estilo, coherencia y una narrativa que conecte con tu audiencia.</p>
+    </div>
+
+  </section>
+	<br>
+	
+	<div class="contenedor2">
+		
+		<header>
+			<h1>Nuestros Canales Oficiales de AlexJa</h1>
+			<h2>"Solo venciéndote vencerás"</h2>
+			<br>
+			
+			<section class="parallax"></section>
+			<section class="contenido">
+				<h2> DEJA QUE TUS RESULTADOS HABLEN POR TI!</h2>
+				<p>En AlexJa nos enfocamos en sacar el máximo potencial de nuestros clientes que estan a nuestro mando. </p>
+				
+			</section>
+			<section class="parallax1"></section>
+			
+			<br>
+			
+			
+		</header>
+
+		<main>
+			<div class="columna">
+				<img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg"  style="width: 160px; vertical-align: middle;">
+				<h2> </h2>
+				<br>
+				
+				<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixnEBnhG5TeC3SSUNxSwhajkd0dstAKaZyFoc0RZbW2yETAkz5YnGsoE_H4KPgF8vbqJMHq5j8Gih81ynEy9aRqKKhvzUTJSjmxgz4Dj_6KMoKtcJJz0wzmJa3yd17S0FhZSil8rLadP_gcrqdY5Jfvu8dChPsW3bAGHwibBZK2z8nVsdsYRlOziCVYBY/w428-h233/YOUUTUBE.jpg" width="350" title="YouTube">
+				<br>
+				<ul>
+					<li style="text-align: justify">Canal de YouTube</li>
+					<li style="text-align: justify">Contenido de entretenimiento</li>
+					<li style="text-align: justify">Vlogs y mucho mas! </li>
+				</ul>
+				<br>
+			</div>
+			
+			<div class="columna">
+				<img src="https://static.vecteezy.com/system/resources/previews/023/986/492/non_2x/tiktok-logo-tiktok-logo-transparent-tiktok-icon-transparent-free-free-png.png"  style="width: 80px; vertical-align: middle;">
+				<h2> TIK TOK</h2>
+				<br>
+				<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgeNOWF45HpulWowHnQE6omWg8FJeoPybPgGzT-5cd4RxsPUnamX3emhy53IUXS57QwmNIBm9JgVBEtj7Om2g5jjyfXcPvMTIP4wp8FQB_ofs23OFu4rw06nuS7uTIesoS-v0-lWHVFfrG14LHIsIYRAvJsRYlQTQHoPx8w57ln4VSD9AWXkqLMfwNjIt0/w400-h263/tik%20tok.png" width="350" title="TIK TOK">
+				<br>
+				<ul>
+					<li style="text-align: justify">Trends y videos de entretenimiento</li>
+					<li style="text-align: justify">Marketing mediante videos publicitarios</li>
+					<li style="text-align: justify">Colaboraciones con videos cortos</li>
+					
+				</ul>
+				<br>
+			</div>
+		</main>
+		
+
+	</div>
+	
+  <section id="contacto" class="contacto">
+    <h2 style="font-family:'Playfair Display', serif;">Contáctame</h2>
+	  <label for="Nombre"> Ingrese su Nombre: </label>
+    <input type="text" placeholder="Tu nombre" >
+	  <label for="Nombre"> Ingrese su Correo: </label>
+    <input type="email" placeholder="Tu correo">
+	  <label for="Nombre"> Ingrese un mensaje para Alex Ja </label>
+    <textarea rows="1" placeholder="Tu mensaje..." ></textarea>
+    <button>Enviar</button>
+  </section>
+
+	
+    <footer class="footer-aj">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <h1>Alex Ja</h1>
+    </div>
+   
+    <div class="footer-social">
+      <a href="" target="_blank"> <i class="fab fa-facebook-f" > <img src ="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" width="60px" > </i></a>
+      <a href="https://www.instagram.com/alexisuio03/?hl=es" target="_blank"> <i class="fab fa-instagram"> <img src ="https://1000marcas.net/wp-content/uploads/2019/11/Instagram-Logosu.png" width="100px" > </i></a>
+      
+		<a href="https://www.tiktok.com/@alex_uio17" target="_blank"> <i class="tik tok"> <img src ="https://static.vecteezy.com/system/resources/previews/023/986/492/non_2x/tiktok-logo-tiktok-logo-transparent-tiktok-icon-transparent-free-free-png.png" width="72px"  ></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 AlexJa. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Contacto + Galería</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #48E5F0 0%, #000000 100%);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+		
+    }
+    }
+
+    header {
+      animation: slideDown 2s ease forwards;
+      opacity: 0;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: #000000;
+      text-shadow: 1px 1px 2px #fff;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #FFFFFF;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      gap: 2rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .formulario, .info {
+      flex: 1 1 300px;
+      background: #47DECE;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      padding: 2rem;
+      animation: fadeInUp 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .formulario input,
+    .formulario textarea {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.8rem;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .formulario button {
+      padding: 0.8rem 1.5rem;
+      background: #000000;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .formulario button:hover {
+      background: #61EAFF;
+    }
+
+    .info img {
+      width: 100%;
+      border-radius: 10px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .info p {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    /* GALERÍA */
+    .galeria {
+      max-width: 1000px;
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .galeria h2 {
+      font-size: 2rem;
+      color: #000000;
+      margin-bottom: 1rem;
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    .galeria-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .galeria-grid img {
+      width: 250px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: appear 1.5s ease forwards;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .galeria-grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    @media (max-width: 768px) {
+      .container, .galeria-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .galeria-grid img {
+        width: 90%;
+        height: auto;
+      }
+    
+	  footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #222;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+	 <br>
+    <h1> Contactate con AlexJa </h1>
+	  <br>
+    <p>¡Queremos saber de ti! Déjanos tu mensaje ✨</p>
+	  <br>
+  </header>
+
+  <div class="container">
+    <div class="formulario">
+      <form>
+        <input type="text" placeholder="Ingrese su nombre" required>
+        <input type="email" placeholder="Ingrese su correo" required>
+        <textarea rows="5" placeholder="Ingrese un mensaje para AlexJa"></textarea>
+        <button type="submit"> Enviar Mensaje </button>
+      </form>
+    </div>
+    <div class="info">
+      <img src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/28fbd59d33685beb5e4633b017a1a59a~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=5b8e206b&x-expires=1754082000&x-signature=k2qxM79JbcjBJf2Z9otnD20frGU%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" alt="AlexJa">
+		
+      <p>📞 Teléfono: +593 98 654 1046 <br>📧 Email: jaime.alexis.soto.diaz@gmail.com </p>
+    </div>
+  </div>
+
+  <!-- GALERÍA -->
+  <section class="galeria">
+    <h2>Eventos Realizados</h2>
+    <div class="galeria-grid">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0PG1jlbBLwQ7vX30cqLZCNAot5ExPs9TOmA&s" alt="Foto 1">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfWBfMc1JJvvkHgkHT0_c-wUu89vmAwJjfXhIpeCwUgHkGSxyNHlrJpiK_cMrhHlz2Sx76MiqOR5xqAQVJgGUtz9MetDOquqyR8IPOtr2wggjxy5EudfTgwrSCLZ021VA6AbQ6DY63HFX3U88LtNPTiqlQK5VUWaEBqGznmvfLtTmkeKsmspdK_zgv3A/s4032/IMG_1414.jpg" alt="Foto 2">
+      <img src="https://www.roamingaroundtheworld.com/wp-content/uploads/2019/03/Cuenca-sign.jpg" alt="Foto 3">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn_-5PZGfKleeP-itBVlHkB4EUdgdPTHSpgg&s" alt="Foto 4">
+      <img src="https://i.ytimg.com/vi/MB9qfcdyuNg/maxresdefault.jpg" alt="Foto 5">
+      <img src="https://www.sony.com.mx/image/fcb77afc5c499ca922dff1c7432c7d2b?fmt=jpeg&wid=720" alt="Foto 6">
+    </div>
+  </section>
+
+  <br>
+	<footer>
+    &copy; 2025 Sitio de Contacto con Galería - Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>
