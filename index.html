@@ -1,543 +1,679 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagina web GENESIS ITSQmet</title>
+  <meta name="description" content="Página de nutrición con intro animada de zanahoria, galería, videos, información y contacto." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f172a;           /* slate-900 */
+      --panel:#111827;        /* gray-900 */
+      --muted:#94a3b8;        /* slate-400 */
+      --text:#e5e7eb;         /* gray-200 */
+      --accent:#f97316;       /* orange-500 (zanahoria) */
+      --accent-2:#22c55e;     /* green-500 (hojas) */
+      --accent-3:#fde68a;     /* amber-200 */
+      --ring: 0 0 0 3px rgba(249,115,22,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial; background: radial-gradient(1200px 800px at 20% -10%, rgba(34,197,94,.12), transparent 60%),radial-gradient(900px 600px at 120% 10%, rgba(249,115,22,.12), transparent 60%), var(--bg); color:var(--text)}
 
-  <title>Alex Ja - Creador de Contenido</title>
+    /* ===== Splash / Intro ===== */
+    .splash{position:fixed;inset:0;background:linear-gradient(180deg,#0b1222 0%, #0f172a 100%); display:grid; place-items:center; z-index:9999; transition:opacity .6s ease .1s, visibility 0s linear .7s}
+    .splash.hidden{opacity:0; visibility:hidden}
+    .carrot-wrap{display:grid; place-items:center; gap:24px}
+    .carrot-logo{width:min(220px,60vw)}
+    .brand-title{font-weight:800; letter-spacing:.5px; font-size: clamp(24px, 6vw, 48px)}
+    .brand-title .accent{color:var(--accent)}
+    .enter-btn{background:var(--accent); color:#111; padding:12px 20px; border-radius:999px; font-weight:700; border:none; cursor:pointer; box-shadow:0 10px 30px rgba(249,115,22,.3); transition: transform .2s ease}
+    .enter-btn:hover{transform:translateY(-2px)}
 
-  <!-- Tipografía elegante desde Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Permanent+Marker&display=swap" rel="stylesheet">
+    /* Carrot SVG Animations */
+    @keyframes growIn { from {transform:scale(.6) rotate(-8deg); opacity:0} to {transform:scale(1) rotate(0); opacity:1}}
+    @keyframes leafSway { 0%{transform: rotate(-6deg)} 50%{transform: rotate(6deg)} 100%{transform: rotate(-6deg)} }
+    @keyframes bounce { 0%,100%{ transform: translateY(0)} 50%{ transform: translateY(-8px)} }
+    .carrot{animation: growIn 900ms cubic-bezier(.2,.8,.2,1) both, bounce 2.2s ease-in-out .9s infinite}
+    .leaf{transform-origin: bottom left; animation: leafSway 3s ease-in-out .6s infinite}
+    .shine{mix-blend-mode: screen; opacity:.6}
 
-  <style type="text/css">
+    /* ===== Header / Nav ===== */
+    header{position:sticky; top:0; z-index:1000; backdrop-filter: blur(8px); background: rgba(2,6,23,.55); border-bottom:1px solid rgba(148,163,184,.12)}
+    .nav{max-width:1100px;margin-inline:auto;display:flex;align-items:center;gap:16px;padding:12px 16px}
+    .nav .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+    .nav .logo svg{width:30px}
+    .nav .links{margin-left:auto; display:flex; gap:6px}
+    .nav a.link{padding:10px 14px;border-radius:999px;text-decoration:none;color:var(--text);font-weight:600;opacity:.9}
+    .nav a.link:hover{background:rgba(148,163,184,.12)}
+    .cta{background:linear-gradient(135deg,var(--accent),#fb923c); color:#111; padding:10px 14px;border-radius:999px;font-weight:800}
+    .hamburger{display:none; margin-left:auto; background:transparent; border:none; padding:8px; cursor:pointer}
+    .hamburger span{display:block; width:26px;height:3px;background:var(--text);border-radius:2px;}
+    .hamburger span+span{margin-top:5px}
+
+    /* Mobile menu */
+    @media (max-width: 860px){
+      .nav .links{display:none; position:absolute; inset:60px 12px auto; flex-direction:column; background:rgba(2,6,23,.9); border:1px solid rgba(148,163,184,.18); padding:10px; border-radius:16px}
+      .nav .links.open{display:flex}
+      .hamburger{display:block}
+    }
+
+    /* ===== Hero ===== */
+    .hero{max-width:1100px; margin:32px auto 0; display:grid; grid-template-columns: 1.1fr .9fr; gap:28px; align-items:center; padding:0 16px}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.15); color:#bbf7d0; padding:6px 12px; border:1px solid rgba(34,197,94,.35); border-radius:999px; font-weight:700; letter-spacing:.3px}
+    .hero h1{font-size: clamp(28px, 6vw, 54px); line-height:1.05; margin:14px 0}
+    .hero p{color:var(--muted); font-size:clamp(14px, 2.6vw, 18px)}
+    .hero .actions{display:flex; gap:12px; margin-top:18px}
+    .btn{border:none;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}
+    .btn.primary{background:var(--accent); color:#111; box-shadow:0 10px 30px rgba(249,115,22,.25)}
+    .btn.ghost{background:transparent; color:var(--text); border:1px solid rgba(148,163,184,.25)}
+    .hero-visual{position:relative; min-height:320px; border-radius:22px; overflow:hidden; 
+		
+		/* IMAGEN INTRO */ 
+		
+		background:linear-gradient(180deg, rgba(249,115,22,.1), rgba(34,197,94,.1)), url('https://st3.depositphotos.com/12889260/32398/v/450/depositphotos_323987134-stock-illustration-vector-illustration-of-different-types.jpg') center/cover no-repeat; box-shadow: inset 0 0 0 9999px rgba(0,0,0,.2)}
+    .hero-visual::after{content:""; position:absolute; inset:0; background: radial-gradient(600px 200px at 70% -10%, rgba(253,230,138,.2), transparent 60%)}
+
+    @media (max-width: 860px){
+      .hero{grid-template-columns: 1fr;}
+    }
+
+    /* ===== Sections ===== */
+    section{padding:56px 16px}
+    .container{max-width:1100px; margin:0 auto}
+    .section-title{font-size:clamp(22px,4vw,34px); margin:0 0 18px;}
+    .kicker{color:var(--muted); font-weight:600; margin-bottom:18px}
+
+    /* ===== Cards (Servicios) ===== */
+    .grid{display:grid; gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width: 920px){.grid.cols-3{grid-template-columns:1fr 1fr}}
+    @media (max-width: 560px){.grid.cols-3{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)); border:1px solid rgba(148,163,184,.18); border-radius:18px; padding:18px; transition: transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,.25)}
+    .icon{width:34px;height:34px; display:inline-grid; place-items:center; border-radius:10px; background:rgba(249,115,22,.18); margin-bottom:10px}
+
+    /* ===== Galería ===== */
+    .gallery{display:grid; grid-template-columns:repeat(12,1fr); gap:10px}
+    .gallery a{position:relative; display:block; border-radius:16px; overflow:hidden; border:1px solid rgba(148,163,184,.18)}
+    .gallery img{width:100%; height:100%; object-fit:cover; display:block; filter:saturate(1.05) contrast(1.05)}
+    .gallery a::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent, rgba(0,0,0,.25)); opacity:0; transition:opacity .25s ease}
+    .gallery a:hover::after{opacity:1}
+    .gallery a:hover img{transform:scale(1.06); transition: transform .35s ease}
+    .col-6{grid-column: span 6}
+    .col-4{grid-column: span 4}
+    .col-8{grid-column: span 8}
+    @media (max-width: 760px){.col-6,.col-4,.col-8{grid-column: span 12}}
+
+    /* ===== Videos ===== */
+    .video-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
+    .video-grid iframe, .video-grid video{width:100%; aspect-ratio:16/9; border:1px solid rgba(148,163,184,.18); border-radius:16px}
+    @media (max-width: 760px){.video-grid{grid-template-columns:1fr}}
+
+    /* ===== Info list ===== */
+    .info-list{display:grid; grid-template-columns: 1fr 1fr; gap:16px}
+    .info-list .panel{background:rgba(255,255,255,.02); border:1px solid rgba(148,163,184,.18); border-radius:16px; padding:18px}
+    @media (max-width: 760px){.info-list{grid-template-columns:1fr}}
+
+    /* ===== Contacto ===== */
+    form{display:grid; gap:12px}
+    input, textarea{background:#0b1222; border:1px solid rgba(148,163,184,.25); color:var(--text); padding:12px 14px; border-radius:12px; font:inherit}
+    input:focus, textarea:focus{outline:none; box-shadow: var(--ring)}
+    textarea{min-height:120px}
+    .contact-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:16px}
+    @media (max-width: 860px){.contact-grid{grid-template-columns:1fr}}
+
+    /* ===== Footer ===== */
+    footer{background:#0b1222; border-top:1px solid rgba(148,163,184,.18)}
+    .footer{max-width:1100px; margin:0 auto; padding:26px 16px; display:grid; grid-template-columns: 1.2fr .8fr .8fr; gap:14px}
+    .socials{display:flex; gap:10px; margin-top:10px}
+    .socials a{display:grid; place-items:center; width:38px; height:38px; border-radius:10px; background:rgba(255,255,255,.04); border:1px solid rgba(148,163,184,.18); color:var(--text)}
+    .copy{grid-column:1/-1; text-align:center; color:var(--muted); font-size:14px; margin-top:6px}
+    @media (max-width: 860px){.footer{grid-template-columns:1fr; text-align:center}}
+
+    /* ===== Floating WhatsApp ===== */
+    .whats{position:fixed; right:18px; bottom:18px; width:56px; height:56px; display:grid; place-items:center; background:#25D366; color:white; border-radius:50%; box-shadow:0 15px 35px rgba(37,211,102,.5); z-index:50; animation: pulse 2.4s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}70%{box-shadow:0 0 0 20px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+
+    /* ===== Reveal on scroll ===== */
+    .reveal{opacity:0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease}
+    .reveal.visible{opacity:1; transform:none}
 	  
-    /* Reset básico */
-	  
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+	  /* ===== Sección Intro ===== */
+  .intro {
+    height: 100vh;
+    background: url("https://static.vecteezy.com/system/resources/previews/005/752/503/non_2x/cute-funny-vegetables-cartoon-characters-workout-and-exercises-set-isolated-on-color-pastel-background-vector.jpg") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    animation: fadeIn 2s ease-in-out;
+    position: relative;
+    padding-top: 60px; /* espacio para el menú */
+  }
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #3B3636
-		  ;
-      color: #222;
-      line-height: 1.6;
-    }
-header h1 {
-      color: #fff;
-      text-align: center;
-	font-family: Gotham, "sans-serif";
- 
-      
-    }
-    header {
-      background: linear-gradient(#0A0A0A, #000000, #24FFF1);
-      color: #fff;
-      text-align: center;
-      padding: 3rem 1rem;
-      font-family:Helvetica,  "sans-serif";
-      animation: fadeInHeader 2s ease-in-out;
-    }
+  .intro::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+  }
 
-    @keyframes fadeInHeader {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  .intro h1, .intro p {
+    position: relative;
+    z-index: 2;
+  }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      background: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+  .intro h1 {
+    font-size: 3em;
+    animation: slideDown 1.5s ease forwards;
+  }
 
-    nav a {
-      color: #222;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
+  .intro p {
+    font-size: 1.2em;
+    margin-top: 15px;
+    max-width: 600px;
+    animation: slideUp 1.5s ease forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
 
-    nav a:hover {
-      color: #75DBE4;
-		background-color: cyan;
-		
-		border-radius: 5px;
-    }
-
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      padding: 2rem;
-    }
-
-    .profile {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .profile:hover {
-      transform: translateY(-10px);
-    }
-
-    .profile h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .profile p {
-      font-size: 1rem;
-    }
-
-    .video {
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      animation: slideUp 1.5s ease;
-    }
-
-    @keyframes slideUp {
-      0% {
-        transform: translateY(50px);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    iframe {
-      width: 100%;
-      height: 300px;
-      border: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background-color: #222;
-      color: #fff;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    /* diseño con flexbox en sección de contacto */
-    .contacto {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background: #fff;
-      padding: 2rem;
-      margin: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .contacto input, .contacto textarea {
-      padding: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    .contacto button {
-      background-color: #000000;
-      color: white;
-      border: none;
-      padding: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .contacto button:hover {
-      background-color: #75DBE4;
-    }
-    
-    .contenedor {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-      padding: 3rem;
-    }
-
-    .tarjeta {
-      background-color: white;
-      border-radius: 12px;
-      max-width: 300px;
-      padding: 1.5rem;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease;
-    }
-
-    .tarjeta:hover {
-      transform: translateY(-10px);
-    }
-
-    .tarjeta h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-      color: #75DBE4;
-    }
-
-    .tarjeta p {
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    .tarjeta img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-    }
-
-    @media screen and (max-width: 768px) {
-      .contenedor {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-.contenedor2 {
-			width: 90%;
-			max-width: 1200px;
-			margin: auto;
-			display: grid;
-			grid-template-rows: auto 1fr auto;
-			gap: 20px;
-			min-height: 100vh;
-		}
-		
-
-		.parallax{
-			height: 300px;
-			background-image: url(https://www.lupamarketing.com.ar/wp-content/uploads/2021/08/contenido-audiovisual-1070x600.jpg?);
-			background-attachment: fixed;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-		.parallax1{
-			height: 300px;
-			background-image: url(https://www.suturart.com/wp-content/uploads/2019/03/virtual_pesadilla.gif);
-			background-attachment: fixed;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-		main {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 20px;
-			text-align: center;
-		}
-		.columna{
-			background-color: white;
-			padding: 10px 30px;
-			border: 2px solid black;
-			border-radius: 10px;
-			box-shadow: 8px 8px 15px #e5e5e5;
-		}
-		.columna li{
-			color: black;
-			font-family: Helvetica, "sans-serif";
-		}
-		.columna img{
-			transition: transform 0.3s ease;
-		}
-		.columna img:hover{
-			transform: scale(1.2);
-			background-color:black;
-		}
-		
-		.contenido h2{
-			color:#75DBE4;
-			}
-	  .hero {
-      background-color: #242020;
-      color: #fff;
-      padding: 40px;
-      text-align: center;
-    }
-    .hero h1 {
-      margin: 0;
-      font-size: 50px;
-    }
-	 			.footer-aj {
-  background-color: #111;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  padding: 40px 20px 20px;
+  /* Animaciones intro */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+	  /* Contenedor para scroll en móviles */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
 }
 
-.footer-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-	
+/* Tabla principal */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 600px; /* asegura buena visualización en PC */
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  border-radius: 10px;
 }
 
-.footer-logo img {
-  height: 60px;
-	
+/* Celdas */
+th, td {
+  padding: 12px;
+  text-align: left;
+  color: #333;
 }
 
-.footer-links {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
+/* Encabezados */
+th {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.footer-links a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s;
-
+/* Filas pares */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
-.footer-links a:hover {
-  color: #e4002b; /* Rojo KFC */
+/* Hover */
+tr:hover {
+  background-color: #e0f5e0;
 }
 
-.footer-social a {
-  color: #fff;
-  margin: 0 10px;
-  font-size: 1.2em;
-  transition: color 0.3s;
-	text-decoration: none;
+/* Imágenes */
+table img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #4CAF50;
 }
 
-.footer-social a:hover {
-  color: #e4002b;
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  th, td {
+    padding: 8px;
+    font-size: 14px;
+  }
+  table img {
+    width: 80px;
+    height: 80px;
+  }
 }
-
-.footer-bottom {
-  margin-top: 30px;
-  border-top: 1px solid #444;
-  padding-top: 10px;
-  text-align: center;
-  font-size: 0.9em;
-  color: #aaa;
-}
-	  .footer-social a{
-		  color:aliceblue;
+	  table th {
+		  text-align: center;
 	  }
-	  
-	   .imagen-con-marco img {
-      border: 5px solid #FFF6F5;
-      padding: 10px;
-		   border-bottom-color: aqua;
-		   background-color: lightslategrey;
-	  
-    }
-	   .imagen-con-marco {
-      border: 5px solid #FFF6F5;
-      padding: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-      animation: moverMarco 3s infinite alternate;
-    }
-
-    @keyframes moverMarco {
-      0% {
-        transform: translateY(0px) rotate(0deg);
-        box-shadow: 0 0 20px rgba(0,0,0,0.3);
-      }
-      100% {
-        transform: translateY(-10px) rotate(1deg);
-        box-shadow: 0 0 30px rgba(0,0,0,0.5);
-      }
-    }
   </style>
 </head>
-
 <body>
+	
+	<!-- Intro -->
+<section class="intro" id="intro">
+  <h1>Nutri Héroes</h1>
+  <p>"No empieces una dieta, empieza un estilo de vida"</p>
+</section>
 
+  <!-- ===== Splash Intro con logo de Zanahoria ===== -->
+  <div class="splash" id="splash">
+    <div class="carrot-wrap">
+      <!-- SVG Zanahoria -->
+      <svg class="carrot-logo" viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" aria-label="Logo zanahoria">
+        <g class="carrot">
+          <!-- hojas -->
+          <g class="leaf">
+            <path d="M120 30 C135 15, 170 20, 165 55 C145 52, 130 45, 120 30 Z" fill="var(--accent-2)"/>
+            <path d="M95 28 C80 12, 40 18, 45 54 C70 52, 85 43, 95 28 Z" fill="var(--accent-2)"/>
+            <path d="M108 22 C108 5, 126 4, 130 22 C120 28, 115 28, 108 22 Z" fill="#16a34a"/>
+          </g>
+          <!-- cuerpo zanahoria -->
+          <path d="M100 50 C140 90, 160 160, 100 240 C40 160, 60 90, 100 50 Z" fill="url(#carrotGrad)" stroke="#fb923c" stroke-width="2"/>
+          <!-- brillos -->
+          <ellipse class="shine" cx="115" cy="110" rx="10" ry="22" fill="#ffffff22"/>
+          <ellipse class="shine" cx="92" cy="150" rx="6" ry="14" fill="#ffffff22"/>
+        </g>
+        <defs>
+          <linearGradient id="carrotGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#fb923c"/>
+            <stop offset="100%" stop-color="#f97316"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="brand-title">Nutri<span class="accent">Héroes</span></div>
+      <button class="enter-btn" id="enterBtn" aria-label="Entrar al sitio">Entrar</button>
+    </div>
+  </div>
+
+  <!-- ===== Header / Nav ===== -->
   <header>
-	 
-    <h1>Alex Ja</h1>
-	  
-    <p>"El éxito no es la ausencia de fracasos, sino la persistencia a pesar de ellos." </p>
+    <nav class="nav" role="navigation" aria-label="Principal">
+      <a class="logo" href="#inicio" aria-label="Ir al inicio">
+        <!-- mini logo -->
+        <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M100 50 C140 90, 160 160, 100 240 C40 160, 60 90, 100 50 Z" fill="var(--accent)"/>
+        </svg>
+        <strong>Nutri Héroes</strong>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="links" id="navLinks">
+        <a class="link" href="#inicio">Inicio</a>
+        <a class="link" href="#nosotros">Nosotros</a>
+        <a class="link" href="#servicios">Servicios</a>
+        <a class="link" href="#galeria">Galería</a>
+        <a class="link" href="#videos">Videos</a>
+        <a class="link cta" href="#contacto">Contacto</a>
+      </div>
+    </nav>
   </header>
 
-  <nav>
-    <a href="#perfil">Sobre Mí</a>
-    <a href="nosotros.html">Nosotros</a>
-    <a href="contactos.html">Contacto</a>
-	<a href="redesalexjaaaa.html">Redes sociales</a>
-  </nav>
-<section class="hero">
-      <h1>Déjanos guiarte, conocemos el camino.</h1>
-      <p>Ponemos a tu disposición un equipo humano y tecnológico capacitado para agregarle valor, continuamente, a tu giro de negocio</p>
-	<br>
-	 <div class="imagen-con-marco">
-	 <img src="https://wallpapers.com/images/hd/motivational-quotes-black-mpi6jhfwg8ngk6g2.jpg" width="700px" height="300px" alt="Imagen de contenido" style="margin: 10px;">
-		 </div>
-    </section>
-	  
-  <section class="container" id="perfil">
-    <div class="profile">
-      <h2>Alex Ja</h2>
-      <p>Hola, soy Alex Ja. Mi pasión es contar historias a través de un video impactante.</p>
-		<p> 🢆 En la actualidad tengo 21 años de Edad.</p>
-		<p>🢆 Me gusta aprender cosas nuevas y del fracaso he aprendido que los errores son partes de la vida. </p>
-		<p>🢆 Soy oriundo de la Ciudad de Quito (Quito Renace). </p>
-		<p>🢆 Amo el Deporte, Ser Runnig no es una casualidad </p>
-		<p>🢆 En la actualidad soy estudiante del ITSQmet y estudio la carrera de Diseño Multimedia. </p>
+  <!-- ===== Hero ===== -->
+  <main id="inicio" class="hero">
+    <div>
+      <span class="badge">🥦 Bienestar con el ITSQmet</span>
+      <h1>Comer sano sí puede ser <span style="color:var(--accent)">delicioso</span>.</h1>
+      <p>Planes personalizados, recetas fáciles y contenido educativo para que disfrutes cada bocado. Nutrición real para vidas reales.</p>
+      <div class="actions">
+        <a href="#servicios" class="btn primary">Ver servicios</a>
+        <a href="#galeria" class="btn ghost">Explorar galería</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true"></div>
+  </main>
+
+  <!-- ===== Nosotros ===== -->
+  <section id="nosotros">
+    <div class="container reveal">
+      <p class="kicker">Quiénes somos</p>
+      <h2 class="section-title">Tu aliado en hábitos saludables</h2>
 		
+		<!-- tabal de contenido nutricion -->
+		<div class="table-container">
+		<table>
+<tr>
+   <th>Dia</th>
+    <th>Desayuno</th>
+    <th>Almuerzo</th>
+    <th>Cena</th>
+	  <th> Imagen </th>
+  </tr>
+  <tr>
+    <td> <h3>Lunes</h3></td>
+    <td>
+	  <p>•	Un huevo cocinado, una porción pequeña de frutas picadas y pan integral </p>
+		<p>•	Un vaso de chocolatada</p>
+		<p>7:00 a 8:00</p>
+	  </td>
+    <td>
+	  <p>•	Crema de verduras con pollo </p>
+		<p>•	Pure de papa con pollo ensalada de zanahoria con brócoli </p>
+		<p>•	Jugo de piña </p>
+		<p>12:00 a 13:00</p>
+	  </td>
+    <td>
+<p>•	Tortilla de verduras </p>
+<p>•	 Leche de almendra</p>
+<p> 6:00 a 7:00 </p>
+</td>
+	  <td><img src="https://images.mrcook.app/recipe-image/018fdfae-a601-7954-85c3-3d9c0dc86d8c" alt="desayuno"></td>
+  </tr>
+  <tr>
+     <td> <h3>Martes</h3> </td>
+    <td>
+	  <p>•	Sándwich de pechuga de pavo </p>
+		<p>•	Un poco de queso</p>
+		<p>•	Jugo de guanábana </p>
+		<p>7:00 a 8:00</p>
+	  </td>
+    <td>
+	  <p>•	Sopa de fideo con papa y pollo</p>
+		<p>•	Arroz con lenteja y pollo</p>
+		<p>Jugo de naranja </p>
+		<p>12:00 a 13:00</p>
+	  </td>
+    <td>
+		<p>•	Pasta con pollo brócoli </p>
+<p>•	Jugo de zanahoria </p>
+ <p>6:00 a 7:00</p>
+		</td>
+	  <td><img src="https://img-global.cpcdn.com/recipes/0793a45ce092d173/680x781f0.5_0.460583_1.0q80/galletitas-saladas-de-maiz-sin-gluten-con-dip-de-aguacate-y-kefir-foto-principal.jpg" alt="desayuno"></td>
+  </tr>
+  <tr>
+     <td> <h3>Miercoles</h3> </td>
+    <td>
+	  <p>•	Poco de arroz y un trozo pequeño de carne</p>
+		<p>•	Licuado de fruta </p>
+		<p>7:00 a 8:00</p>
 		
-		
-    </div>
-
-    <div class="profile">
-      <h2>Servicios</h2>
-      <ul>
-        <li> Edición de video profesional para redes sociales </li>
-        <li> Creación de contenido multimedia</li>
-        <li> Camarografo </li>
-		  <li> Publicidad  </li>
-		  <li> Manejo de Redes Sociales  </li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="container" id="videos">
-    <div class="video">
-      <iframe src="https://media.istockphoto.com/id/1405992976/es/v%C3%ADdeo/hermosa-gerente-de-proyecto-de-pelo-corto-trabajando-en-la-computadora-en-la-oficina-los.mp4?s=mp4-640x640-is&k=20&c=cuhezZi_pmBeLYzuipfM57RA5GTIzOLRKuJqK1aKWO8=" title="video de AlexJa" allowfullscreen></iframe>
-    </div>
-    <div class="video">
-      <iframe src="https://media.istockphoto.com/id/2170480034/video/technology-digitally-generated-image-digital-display-digital-animation-digitization.mp4?s=mp4-640x640-is&k=20&c=81ltQqC04BDhtxjmq7C5baL3DKz8luMOLOVNs1i838s=" title="video 2" allowfullscreen></iframe>
-    </div>
-  </section>
- <section class="contenedor">
-    
-    <!-- Tarjeta 1 -->
-    <div class="tarjeta">
-      <img src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/28fbd59d33685beb5e4633b017a1a59a~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=261988c5&x-expires=1754074800&x-signature=ad6kmW27KY2Ft7Qg4p9Z9UJ8X4Y%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" alt="Imagen de contenido">
-      <h2>Alex Ja</h2>
-      <p> Profesionales en video, fotografía y medios digitales. Ayudo a las marcas a destacar visualmente.</p>
-    </div>
-
-    <!-- Tarjeta 2 -->
-    <div class="tarjeta">
-      <img src="https://visualma.com/static/ca4a035423668dd63dfe5d6186235573/1e21a/sets-grabacion-virtual-mexico.jpg">
-      <h2>Producción Visual</h2>
-      <p>Trabajamos con los mejores Equipos de Produccion del Mercado.</p>
-		<h2>Marcas:</h2>
-		<li>SONNY</li>
-		<li>Apple</li>
-		<li>Adobe</li>
-    </div>
-
-    <!-- Tarjeta 3 -->
-    <div class="tarjeta">
-      <img src="https://bing.com/th/id/BCO.bfdc2724-9f97-4156-ab4c-dc5034f2f4cb.png" alt="Marca personal">
-      <h2>Marca Personal</h2>
-      <p>Impulsa tu identidad visual con estilo, coherencia y una narrativa que conecte con tu audiencia.</p>
-    </div>
-
-  </section>
-	<br>
-	
-	<div class="contenedor2">
-		
-		<header>
-			<h1>Nuestros Canales Oficiales de AlexJa</h1>
-			<h2>"Solo venciéndote vencerás"</h2>
-			<br>
-			
-			<section class="parallax"></section>
-			<section class="contenido">
-				<h2> DEJA QUE TUS RESULTADOS HABLEN POR TI!</h2>
-				<p>En AlexJa nos enfocamos en sacar el máximo potencial de nuestros clientes que estan a nuestro mando. </p>
+	  </td>
+    <td>
+	  <p>•	Consomé de pollo </p>
+		<p>•	Arroz con seco de pollo y ensalada rusa</p>
+		<p>•	Jugo de sandia </p>
+		<p>12:00 a 13:00</p>
+	  </td>
+    <td>
+	  <p>•	Sopa de lentejas </p>
+<p>•	Leche de chocolate</p>
+<p>	6:00 a 7:00</p>
+	  </td>
+	  <td><img src="https://mejorconsalud.as.com/wp-content/uploads/2018/04/hacer-torta-de-platano.jpg" alt="desayuno"></td>
+  </tr>
+			<tr>
+     <td> <h3>Jueves</h3> </td>
+    <td>
+		<p>•	Caldo de papa con desmenuzado de pollo</p>
+		<p>•	Pera picada</p>
+		<p>•	Yogurt</p>
+		<p>7:00 a 8:00</p>
+				</td>
+    <td>
+			<p>•	Sopa de quinua Arroz con pollo al horno con ensalada de tomate y aguacate </p>
+		<p>•	Jugo de piña</p>
+		<p>12:00 a 13:00</p>
+		<p></p>
+				</td>
+    <td>
+				<p>•	Arroz con Atún </p>
+<p>•	Agua con saborizada </p>
+<p>	6:00 a 7:00</p>
+				</td>
+	  <td><img src="https://www.gourmet.cl/wp-content/uploads/2023/12/YOGURT-GRANOLA.jpg" alt="desayuno"></td>
+  </tr>
+			<tr>
+     <td> <h3>Viernes</h3> </td>
+    <td>
+				<p>•	Avena cocida con trozos de manzana y un poco de canela</p>
+		<p>•	Quaker de piña</p>
+		<p>7:00 a 8:00</p>
+	</td>
 				
-			</section>
-			<section class="parallax1"></section>
-			
-			<br>
-			
-			
-		</header>
-
-		<main>
-			<div class="columna">
-				<img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg"  style="width: 160px; vertical-align: middle;">
-				<h2> </h2>
-				<br>
-				
-				<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixnEBnhG5TeC3SSUNxSwhajkd0dstAKaZyFoc0RZbW2yETAkz5YnGsoE_H4KPgF8vbqJMHq5j8Gih81ynEy9aRqKKhvzUTJSjmxgz4Dj_6KMoKtcJJz0wzmJa3yd17S0FhZSil8rLadP_gcrqdY5Jfvu8dChPsW3bAGHwibBZK2z8nVsdsYRlOziCVYBY/w428-h233/YOUUTUBE.jpg" width="350" title="YouTube">
-				<br>
-				<ul>
-					<li style="text-align: justify">Canal de YouTube</li>
-					<li style="text-align: justify">Contenido de entretenimiento</li>
-					<li style="text-align: justify">Vlogs y mucho mas! </li>
-				</ul>
-				<br>
-			</div>
-			
-			<div class="columna">
-				<img src="https://static.vecteezy.com/system/resources/previews/023/986/492/non_2x/tiktok-logo-tiktok-logo-transparent-tiktok-icon-transparent-free-free-png.png"  style="width: 80px; vertical-align: middle;">
-				<h2> TIK TOK</h2>
-				<br>
-				<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgeNOWF45HpulWowHnQE6omWg8FJeoPybPgGzT-5cd4RxsPUnamX3emhy53IUXS57QwmNIBm9JgVBEtj7Om2g5jjyfXcPvMTIP4wp8FQB_ofs23OFu4rw06nuS7uTIesoS-v0-lWHVFfrG14LHIsIYRAvJsRYlQTQHoPx8w57ln4VSD9AWXkqLMfwNjIt0/w400-h263/tik%20tok.png" width="350" title="TIK TOK">
-				<br>
-				<ul>
-					<li style="text-align: justify">Trends y videos de entretenimiento</li>
-					<li style="text-align: justify">Marketing mediante videos publicitarios</li>
-					<li style="text-align: justify">Colaboraciones con videos cortos</li>
-					
-				</ul>
-				<br>
-			</div>
-		</main>
-		
-
-	</div>
-	
-  <section id="contacto" class="contacto">
-    <h2 style="font-family:'Playfair Display', serif;">Contáctame</h2>
-	  <label for="Nombre"> Ingrese su Nombre: </label>
-    <input type="text" placeholder="Tu nombre" >
-	  <label for="Nombre"> Ingrese su Correo: </label>
-    <input type="email" placeholder="Tu correo">
-	  <label for="Nombre"> Ingrese un mensaje para Alex Ja </label>
-    <textarea rows="1" placeholder="Tu mensaje..." ></textarea>
-    <button>Enviar</button>
+    <td>
+			<p>•	Sopa de espinaca con queso</p>
+		<p>•	Arroz con ensalada de coliflor y carne frita </p>
+		<p>•	Jugo de papaya </p>
+		<p>12:00 a 13:00 </p>
+				</td>
+    <td>
+				<p>•	Pollo al horno con pure de papas </p>
+<p>•	Batido de sandia</p>
+<p>	6:00 a 7:00</p>
+				</td>
+	  <td><img src="https://www.nestlefamilynes.com.mx/sites/default/files/inline-images/gerber-articulos-mayo-1-5-725x482.jpg" alt="desayuno"></td>
+				<tr>
+     <td> <h3>Sabado</h3> </td>
+    <td>
+		<p>•	Huevos revueltos con pan integral</p>
+		<p>•	Batido de plátano</p>
+		<p>7:00 a 8:00</p>
+					</td>
+    <td>
+				<p>•	Sopa de verduras</p>
+		<p>•	Arroz con menestra de lenteja con pollo al horno </p>
+		<p>•	Jugo de melón </p>
+		<p>12:00 a 13:00</p>
+					</td>
+    <td>
+					<p>•	Brochetas de pollo y verduras</p>
+<p>•	Jugo de manzana </p>
+<p>	6:00 a 7:00</p>
+					</td>
+	  <td><img src="https://eresmama.com/wp-content/uploads/2016/05/7e4a8eb83ba178b4a14cac27c97c5b5c-500x373.jpg" alt="desayuno"></td>
+  </tr>
+			<tr>
+     <td><h3>Domingo</h3> </td>
+    <td>
+			<p>•	Tortitas de avena y fruta con granola</p>	
+		<p>•	Leche de almendra</p>
+		<p>7:00 a 8:00</p>
+				</td>
+    <td>
+			<p>•	Sopa de tallarín con queso </p>
+		<p>•	Arroz moro con pollo al vapor </p>
+		<p>•	Jugo de tomate de árbol </p>
+		<p>12:00 a 13:00</p>
+				</td>
+    <td>
+				<p>•	Empanadas de verduras</p>
+<p>•	Yogurt </p>
+<p>6:00 a 7:00</p>
+				</td>
+	  <td><img src="https://saposyprincesas.elmundo.es/assets/2018/01/minipizzas.jpg/700/webp" alt="desayuno"></td>
+  </tr>
+  </tr>
+</table>
+		</div>
+		<br>
+	  <br>
+      <div class="info-list" style="margin-top:8px">
+        <div class="panel">
+          <h3>Recomendación</h3>
+          <p>Consumir una dieta variada y equilibrada, priorizando los alimentos frescos, evitando los procesados y azucarados, ofreciendo 5 comidas diarias, asegurando la ingesta de agua y evitando el exceso de alimentos procesados.</p>
+        </div>
+        <div class="panel">
+          <h3>Conclusión</h3>
+          <p>Garantizar una dieta equilibrada y balanceada rica en frutas, verduras, proteínas y cereales integrales es crucial para el desarrollo físico y cognitivo, previniendo problemas de salud a largo plazo y promoviendo una vida saludable.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-	
-    <footer class="footer-aj">
-  <div class="footer-container">
-    <div class="footer-logo">
-      <h1>Alex Ja</h1>
+  <!-- ===== Servicios ===== -->
+  <section id="servicios">
+    <div class="container reveal">
+      <p class="kicker">¿Qué ofrecemos?</p>
+      <h2 class="section-title">Servicios</h2>
+      <div class="grid cols-3" style="margin-top:10px">
+        <article class="card">
+          <div class="icon">🥕</div>
+          <h3>Plan Personalizado</h3>
+          <p class="muted">Evaluación completa, plan semanal y seguimiento por chat.</p>
+        </article>
+        <article class="card">
+          <div class="icon" style="background:rgba(34,197,94,.18)">🥗</div>
+          <h3>Recetas </h3>
+          <p class="muted">Recetario fácil, lista de compras y batch cooking.</p>
+        </article>
+        <article class="card">
+          <div class="icon" style="background:rgba(253,230,138,.18)">📊</div>
+          <h3>Talleres & Charlas</h3>
+          <p class="muted">Sesiones para empresas, colegios, universidades y comunidades.</p>
+        </article>
+      </div>
     </div>
-   
-    <div class="footer-social">
-      <a href="" target="_blank"> <i class="fab fa-facebook-f" > <img src ="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" width="60px" > </i></a>
-      <a href="https://www.instagram.com/alexisuio03/?hl=es" target="_blank"> <i class="fab fa-instagram"> <img src ="https://1000marcas.net/wp-content/uploads/2019/11/Instagram-Logosu.png" width="100px" > </i></a>
-      
-		<a href="https://www.tiktok.com/@alex_uio17" target="_blank"> <i class="tik tok"> <img src ="https://static.vecteezy.com/system/resources/previews/023/986/492/non_2x/tiktok-logo-tiktok-logo-transparent-tiktok-icon-transparent-free-free-png.png" width="72px"  ></i></a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; 2025 AlexJa. Todos los derechos reservados.</p>
-  </div>
-</footer>
+  </section>
 
+  <!-- ===== Galería ===== -->
+  <section id="galeria">
+    <div class="container reveal">
+      <p class="kicker">Inspírate</p>
+      <h2 class="section-title">Galería</h2>
+      <div class="gallery" style="margin-top:12px">
+        <a class="col-8" href="#" aria-label="foto 1">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1974&auto=format&fit=crop" alt="Bowl de vegetales colorido" />
+        </a>
+        <a class="col-4" href="#" aria-label="foto 2">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?q=80&w=1887&auto=format&fit=crop" alt="Zanahorias frescas" />
+        </a>
+        <a class="col-4" href="#" aria-label="foto 3">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?q=80&w=1974&auto=format&fit=crop" alt="Mercado con vegetales" />
+        </a>
+        <a class="col-8" href="#" aria-label="foto 4">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1464454709131-ffd692591ee5?q=80&w=1974&auto=format&fit=crop" alt="Smoothies saludables" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Videos ===== -->
+  <section id="videos">
+    <div class="container reveal">
+      <p class="kicker">Aprende en minutos con Nosotros </p>
+      <h2 class="section-title">Videos</h2>
+      <div class="video-grid" style="margin-top:12px">
+        <iframe src="seleccion-saludable-de-alimentos-presentado-por-puros-cuentos-saludables-ytshorts.savetube.me.mp4" title="Recetas saludables" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen   ></iframe>
+        <iframe src="la-nutricion-videos-educativos-para-ninos-ytshorts.savetube.me.mp4" title="Batch cooking" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen  ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contacto ===== -->
+  <section id="contacto">
+    <div class="container reveal">
+      <p class="kicker">Contactanos para brindarte una asesoria. </p>
+      <h2 class="section-title">Contacto</h2>
+      <div class="contact-grid" style="margin-top:10px">
+        <form onsubmit="event.preventDefault(); alert('¡Gracias! Te contactaremos pronto.'); this.reset();">
+          <label>
+            <span>Nombre</span>
+            <input type="text" name="nombre" placeholder="Tu nombre" required />
+          </label>
+          <label>
+            <span>Correo</span>
+            <input type="email" name="email" placeholder="correo@gmail.com" required />
+          </label>
+          <label>
+            <span>Mensaje</span>
+            <textarea name="mensaje" placeholder="Cuéntanos! Como podemos ayudarte?" required></textarea>
+          </label>
+          <button class="btn primary" type="submit">Enviar</button>
+        </form>
+        <div class="panel">
+          <h3>Información</h3>
+          <p>📍 Quito, Ecuador</p>
+          <p>📞 +593 9 9999 9999</p>
+          <p>✉️ eunicegenesis2@gmail.com </p>
+          <div class="socials">
+            <a aria-label="Instagram" href="https://www.instagram.com/genesis.yiyi6/?hl=es" title="Instagram" target="_blank"> 
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 100 10 5 5 0 000-10z" stroke="currentColor" stroke-width="2"/><path d="M16.5 7.5h.01" stroke="currentColor" stroke-width="2"/><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/></svg>
+            </a>
+            <a aria-label="Facebook" href="https://www.facebook.com/genesis.criollo.71" title="Facebook" target="_blank">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 9h3V5h-3a5 5 0 00-5 5v3H6v4h3v6h4v-6h3l1-4h-4v-3a1 1 0 011-1z" stroke="currentColor" stroke-width="2"/></svg>
+            </a>
+            <a aria-label="YouTube" href="https://www.youtube.com/@DETODOCURIOSO" title="YouTube" target="_blank">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12s0-3-1-4-4-1-9-1-8 0-9 1-1 4-1 4 0 3 1 4 4 1 9 1 8 0 9-1 1-4 1-4z" stroke="currentColor" stroke-width="2"/><path d="M10 15l5-3-5-3v6z" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="footer">
+      <div>
+        <strong>Nutri Héroes </strong>
+        <p style="color:var(--muted); margin-top:6px">Cada bocado es una oportunidad para cuidar de ti mismo.</p>
+      </div>
+      <div>
+        <h4>Enlaces Sobre Nosotros</h4>
+        <ul style="list-style:none; padding:0; text-decoration: none; margin:6px 0; color:var(--muted)">
+          <li><a class="link" href="#nosotros">Nosotros</a></li>
+          <li><a class="link" href="#servicios">Servicios</a></li>
+          <li><a class="link" href="#galeria">Galería</a></li>
+          <li><a class="link" href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <p style="color:var(--muted)">eunicegenesis2@gmail.com<br/>+593 98 323 3450</p>
+      </div>
+      <div class="copy">© <span id="year"></span> Nutri Héroes. Todos los derechos reservados. Sitio Web // Educacion Inicial  ITSQmet </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp flotante -->
+  <a class="whats" href="https://wa.me/593983233450" target="_blank" rel="noopener" aria-label="Chatear por WhatsApp">
+    <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M19.11 17.2c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.15-.19.29-.74.92-.9 1.11-.17.19-.33.21-.62.08-.29-.15-1.21-.45-2.3-1.43-.85-.75-1.43-1.68-1.6-1.97-.17-.29-.02-.45.13-.6.13-.13.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.15-.64-1.55-.88-2.12-.23-.56-.47-.49-.64-.5-.17-.01-.36-.01-.55-.01-.19 0-.5.07-.76.36-.26.29-1 1-1 2.43 0 1.43 1.02 2.81 1.16 3 .14.19 2 3.04 4.86 4.26.68.29 1.21.46 1.63.59.69.22 1.31.19 1.8.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.24.17-1.37-.07-.13-.26-.2-.55-.35z"/><path d="M26.5 5.5C23.8 2.8 20.1 1.3 16.2 1.3 8.8 1.3 2.8 7.3 2.8 14.7c0 2.3.6 4.6 1.8 6.6L2 31l9.9-2.6c1.9 1 4.1 1.6 6.3 1.6 7.4 0 13.4-6 13.4-13.4 0-3.9-1.5-7.6-4.3-10.5zM16.2 27.3c-2 0-4-.5-5.7-1.5l-.4-.2-5.9 1.6 1.6-5.8-.3-.4c-1.1-1.8-1.7-3.8-1.7-5.9 0-6.2 5.1-11.2 11.4-11.2 3 0 5.8 1.2 8 3.4 2.1 2.2 3.4 5 3.4 8 0 6.3-5.1 11.3-11.4 11.3z"/></svg>
+  </a>
+
+  <script>
+    // Ocultar splash al pulsar "Entrar" o tras un tiempo
+    const splash = document.getElementById('splash');
+    const enterBtn = document.getElementById('enterBtn');
+    const navLinks = document.getElementById('navLinks');
+    const hamburger = document.getElementById('hamburger');
+
+    enterBtn.addEventListener('click', () => splash.classList.add('hidden'));
+    // Auto ocultar a los 2.5s como fallback
+    setTimeout(()=> splash.classList.add('hidden'), 2500);
+
+    // Menú responsive
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> navLinks.classList.remove('open')));
+
+    // Año dinámico
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+      })
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+  </script>
 </body>
 </html>
